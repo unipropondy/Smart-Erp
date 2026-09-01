@@ -7,7 +7,7 @@ const path = require('path');
 const cron = require('node-cron');
 
 const app = express();
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 
 // Middleware
 app.use((req, res, next) => {
@@ -14490,11 +14490,16 @@ app.delete('/api/purchase-invoices/:id', async (req, res) => {
     }
 });
 
-// ============= START SERVER =============
+// ============= GLOBAL ERROR HANDLER =============
+app.use((err, req, res, next) => {
+    console.error('❌ Unhandled Error:', err);
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS, PATCH');
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+    res.status(500).json({ success: false, error: err.message || 'Internal Server Error' });
+});
 
-app.listen(PORT, () => {
-    console.log(`🚀 Server running on: http://localhost:${PORT}`);
-    console.log(`🔧 API Test: http://localhost:${PORT}/api/test`);
-    console.log(`📊 List DBs: http://localhost:${PORT}/api/dbs`);
-    console.log(`➕ Insert Test: http://localhost:${PORT}/api/insert-test`);
+// ============= START SERVER =============
+app.listen(PORT, '0.0.0.0', () => {
+    console.log(`🚀 Server running on port ${PORT}`);
 });
