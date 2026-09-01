@@ -37,8 +37,8 @@ const config = {
         encrypt: true,
         trustServerCertificate: true,
         enableArithAbort: true,
-        connectTimeout: 60000,
-        requestTimeout: 60000
+        connectTimeout: 10000,
+        requestTimeout: 15000
     },
     pool: {
         max: 10,
@@ -54,14 +54,10 @@ async function getPool() {
         try {
             pool = await mssql.connect(config);
             console.log('✅ MSSQL Connection SUCCESSFUL!');
-            
-            // Test query - Get databases
-            const result = await pool.request().query('SELECT name FROM sys.databases');
-            console.log('📊 Available databases:');
-            result.recordset.forEach(row => console.log('  -', row.name));
             return pool;
         } catch (err) {
             console.error('❌ Database connection FAILED:', err.message);
+            pool = null;
             throw err;
         }
     }
