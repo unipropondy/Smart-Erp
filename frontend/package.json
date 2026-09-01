@@ -1,0 +1,13 @@
+{
+  "name": "unipro-frontend",
+  "version": "1.0.0",
+  "description": "Unipro ERP Frontend Static Build",
+  "main": "index.html",
+  "scripts": {
+    "build": "node build.js",
+    "web:build": "node build.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
