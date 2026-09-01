@@ -28,10 +28,10 @@ app.use(express.urlencoded({ limit: '10mb', extended: true }));
 
 // ============= MSSQL CONNECTION CONFIG =============
 const config = {
-    user: process.env.DB_USER || 'admin',
-    password: process.env.DB_PASSWORD || 'uniprosg1500',
-    server: process.env.DB_HOST || 'database-1.ct2s4oesuriu.ap-southeast-2.rds.amazonaws.com',
-    port: parseInt(process.env.DB_PORT) || 1433,
+    user: process.env.DB_USER || 'ups',
+    password: process.env.DB_PASSWORD || 'ups',
+    server: process.env.DB_HOST || 'myerpcloud.dyndns.org',
+    port: parseInt(process.env.DB_PORT) || 9199,
     database: process.env.DB_NAME || 'unipro_erp',
     options: {
         encrypt: true,
