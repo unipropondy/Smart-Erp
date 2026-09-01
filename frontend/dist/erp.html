@@ -2,6 +2,26 @@
 <html lang="en">
 
 <head>
+<script>
+        (function() {
+            const RAILWAY_BACKEND = 'https://smart-erp-production-0ade.up.railway.app';
+            const originalFetch = window.fetch;
+            window.fetch = function(resource, init) {
+                let url = typeof resource === 'string' ? resource : (resource && resource.url ? resource.url : '');
+                if (url && url.startsWith('/api/')) {
+                    if (window.location.origin !== RAILWAY_BACKEND && !window.location.origin.includes('localhost:5000')) {
+                        url = RAILWAY_BACKEND + url;
+                    }
+                }
+                if (typeof resource === 'string') {
+                    return originalFetch(url, init);
+                } else if (resource && typeof resource === 'object') {
+                    return originalFetch(new Request(url, resource), init);
+                }
+                return originalFetch(resource, init);
+            };
+        })();
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>UNIPROSG - HRMS</title>
